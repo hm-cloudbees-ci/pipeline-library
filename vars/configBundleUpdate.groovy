@@ -1,6 +1,6 @@
 // vars/configBundleUpdate.groovy
 def call(String nameSpace = "sda") {
-  def masterName = System.properties.'MASTER_NAME'
+  def bundleName = System.properties.'BUNDLE_NAME'
   def label = "kubectl"
   def podYaml = libraryResource 'podtemplates/kubectl.yml'
   
@@ -8,9 +8,9 @@ def call(String nameSpace = "sda") {
     node(label) {
       checkout scm
       container("kubectl") {
-        sh "mkdir -p ${masterName}"
-        sh "cp *.yaml ${masterName}"
-        sh "kubectl cp --namespace ${nameSpace} ${masterName} cjoc-0:/var/jenkins_home/jcasc-bundles-store/ -c jenkins"
+        sh "mkdir -p ${bundleName}"
+        sh "cp *.yaml ${bundleName}"
+        sh "kubectl cp --namespace ${nameSpace} ${bundleName} cjoc-0:/var/jenkins_home/jcasc-bundles-store/ -c jenkins"
       }
     }
   }

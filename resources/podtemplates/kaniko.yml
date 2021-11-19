@@ -3,6 +3,7 @@ metadata:
   name: kaniko
 spec:
   serviceAccount: provisioner
+  serviceAccountName: provisioner
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug-v0.19.0

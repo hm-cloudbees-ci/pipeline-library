@@ -15,7 +15,7 @@ def call(Map config) {
           sh "gcloud run services describe ${config.serviceName} --platform kubernetes --kubeconfig ${config.kubeconfig} --format=json > run.json 2>&1"
         }
         else {
-          sh "gcloud run deploy ${config.serviceName} --image ${config.image} --allow-unauthenticated --region ${config.region} --platform managed --port 8080"
+          sh "gcloud run deploy ${config.serviceName} --image ${config.image} --allow-unauthenticated --region ${config.region} --platform managed --port 8080 --project core-workshop"
           sh "gcloud run services describe ${config.serviceName} --region ${config.region} --platform managed --format=json > run.json 2>&1"
         } 
       }

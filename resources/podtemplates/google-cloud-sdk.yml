@@ -2,6 +2,7 @@ kind: Pod
 metadata:
   name: cloud-sdk
 spec:
+  serviceAccount: provisioner
   containers:
   - name: gcp-sdk
     image: gcr.io/google.com/cloudsdktool/cloud-sdk:308.0.0

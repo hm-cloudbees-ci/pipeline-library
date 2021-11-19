@@ -13,7 +13,7 @@ def call(Map config) {
           sh "gcloud beta run services delete ${config.serviceName} --platform kubernetes --namespace ${config.namespace} --kubeconfig ${config.kubeconfig} --quiet"
         }
         else {
-          sh "gcloud beta run services delete ${config.serviceName} --region ${config.region} --platform managed --quiet"
+          sh "gcloud beta run services delete ${config.serviceName} --region ${config.region} --platform managed --quiet --project core-workshop"
         } 
       }
     }

@@ -16,7 +16,7 @@ def call(Map config) {
         }
         else {
           sh "gcloud run deploy ${config.serviceName} --image ${config.image} --allow-unauthenticated --region ${config.region} --platform managed --port 8080 --project core-workshop"
-          sh "gcloud run services describe ${config.serviceName} --region ${config.region} --platform managed --format=json > run.json 2>&1"
+          sh "gcloud run services describe ${config.serviceName} --region ${config.region} --platform managed --project core-workshop --format=json > run.json 2>&1"
         } 
       }
       //print detail description of deployed servce

@@ -2,7 +2,8 @@ kind: Pod
 metadata:
   name: gsutil
 spec:
-  serviceAccountName: jenkins
+  serviceAccount: "provisioner"
+  serviceAccountName: "provisioner"
   containers:
   - name: gsutil
     image: gcr.io/cloud-builders/gsutil:latest

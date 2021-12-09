@@ -4,6 +4,8 @@ metadata:
 spec:
   serviceAccount: provisioner
   containers:
+  - name: jnlp
+    image: gcr.io/core-workshop/k8s-jnlp-agent@sha256:28490f8659bcfdae8159286d6c88fdd7365d6928255103e7500f05dd527bdc8f
   - name: gcp-sdk
     image: gcr.io/google.com/cloudsdktool/cloud-sdk:308.0.0
     command:

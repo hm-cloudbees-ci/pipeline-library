@@ -15,7 +15,7 @@ def call(String gitHubOrg, String gitHubRepo, String deployUrl = "", String envi
     """, returnStdout: true)
     env.GITHUB_DEPLOYMENT_ID = deploymentId
     echo "GitHub deployment id: ${env.GITHUB_DEPLOYMENT_ID}"
-    gitHubDeployStatus(gitHubOrg, gitHubRepo, deployUrl)
+    gitHubDeployStatus(gitHubOrg, gitHubRepo, deployUrl, 'in_progress', credentialId)
    
   }
 } 

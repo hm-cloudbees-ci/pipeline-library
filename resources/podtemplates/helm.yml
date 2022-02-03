@@ -1,0 +1,12 @@
+kind: Pod
+metadata:
+  name: helm
+spec:
+  containers:
+  - name: helm
+    image: us-east1-docker.pkg.dev/core-workshop/workshop-registry/helm:3.8.0
+    imagePullPolicy: Always
+    command:
+    - sleep
+    args:
+    - 99d

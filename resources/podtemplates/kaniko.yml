@@ -4,11 +4,12 @@ metadata:
 spec:
   containers:
   - name: kaniko
-    image: gcr.io/kaniko-project/executor:v1.6.0-debug
+    image: us-east1-docker.pkg.dev/core-workshop/workshop-registry/kaniko:1.6.0
     imagePullPolicy: Always
     command:
-    - /busybox/cat
-    tty: true
+    - /busybox/sleep
+    args:
+    - 99d
     securityContext:
       runAsUser: 0
       runAsGroup: 0

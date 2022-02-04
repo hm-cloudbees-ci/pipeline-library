@@ -10,9 +10,11 @@ def call(String name,
       stagingUrl = "https://${name}.staging.workshop.cb-sa.io"
       gitHubDeploy(repoOwner, repo, "", "staging", githubCredentialId, "true", "false")
       container('helm') {
-        sh """
-          helm upgrade --install -f ./chart/values.yaml --set image.tag=$imageTag --namespace=$namespace  $name ./chart
-        """
+        withCredentials([string(credentialsId: 'fm-key', variable: 'FM_KEY')]) {
+          sh '''
+            helm upgrade --install -f ./chart/values.yaml --set image.tag=$imageTag --set fmToken=$FM_KEY --namespace=$namespace  $name ./chart
+          '''
+        }
       }
       gitHubDeployStatus(repoOwner, repo, stagingUrl, 'success', githubCredentialId)
       //only add comment for PRs - CHANGE_ID isn't populated for commits to regular branches

@@ -9,10 +9,13 @@ def call(String name,
       body()
       stagingUrl = "https://${name}.staging.workshop.cb-sa.io"
       gitHubDeploy(repoOwner, repo, "", "staging", githubCredentialId, "true", "false")
+      env.NAME=name
+      env.IMAGE_TAG=imageTag
+      env.NAMESPACE=namespace
       container('helm') {
         withCredentials([string(credentialsId: 'fm-key', variable: 'FM_KEY')]) {
           sh '''
-            helm upgrade --install -f ./chart/values.yaml --set image.tag=$imageTag --set fmToken=$FM_KEY --namespace=$namespace  $name ./chart
+            helm upgrade --install -f ./chart/values.yaml --set image.tag=$IMAGE_TAG --set fmToken=$FM_KEY --namespace=$NAMESPACE  $NAME ./chart
           '''
         }
       }

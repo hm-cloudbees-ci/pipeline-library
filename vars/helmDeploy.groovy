@@ -7,8 +7,8 @@ def call(String name,
   podTemplate(name: 'helm', inheritFrom: 'default-jnlp', label: label, yaml: podYaml, podRetention: never(), activeDeadlineSeconds:1) {
     node(label) {
       body()
-      stagingUrl = "https://${name}.staging.workshop.cb-sa.io"
-      gitHubDeploy(repoOwner, repo, "", "staging", githubCredentialId, "true", "false")
+      stagingUrl = "https://${name}.${env.DEPLOYMENT_ENV}.workshop.cb-sa.io"
+      gitHubDeploy(REPO_OWNER, REPO_NAME, "", "staging", GITHUB_CREDENTIAL_ID, "true", "false")
       env.NAME=name
       env.IMAGE_TAG=imageTag
       env.NAMESPACE=namespace
@@ -19,15 +19,15 @@ def call(String name,
           '''
         }
       }
-      gitHubDeployStatus(repoOwner, repo, stagingUrl, 'success', githubCredentialId)
+      gitHubDeployStatus(REPO_OWNER, REPO_NAME, stagingUrl, 'success', GITHUB_CREDENTIAL_ID)
       //only add comment for PRs - CHANGE_ID isn't populated for commits to regular branches
       if (env.CHANGE_ID) {
         def config = [:]
-        config.message = "Staging Environment URL: ${stagingUrl}"
-        config.credId = githubCredentialId
+        config.message = "${env.DEPLOYMENT_ENV} Environment URL: ${stagingUrl}"
+        config.credId = GITHUB_CREDENTIAL_ID
         config.issueId = env.CHANGE_ID
-        config.repoOwner = repoOwner
-        config.repo = repo
+        config.repoOwner = REPO_OWNER
+        config.repo = REPO_NAME
         gitHubComment(config)
       }
     }

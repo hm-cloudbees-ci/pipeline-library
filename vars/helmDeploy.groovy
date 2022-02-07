@@ -22,12 +22,7 @@ def call(String name,
       gitHubDeployStatus(REPO_OWNER, REPO_NAME, stagingUrl, 'success', GITHUB_CREDENTIAL_ID)
       //only add comment for PRs - CHANGE_ID isn't populated for commits to regular branches
       if (env.CHANGE_ID) {
-        def config = [:]
-        config.message = "${env.DEPLOYMENT_ENV} Environment URL: ${stagingUrl}"
-        config.credId = GITHUB_CREDENTIAL_ID
-        config.issueId = env.CHANGE_ID
-        config.repoOwner = REPO_OWNER
-        config.repo = REPO_NAME
+        def config = [message:"${env.DEPLOYMENT_ENV} Environment URL: ${stagingUrl}"]
         gitHubComment(config)
       }
     }

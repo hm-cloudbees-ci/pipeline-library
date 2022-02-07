@@ -22,7 +22,7 @@ def call(String name,
       gitHubDeployStatus(REPO_OWNER, REPO_NAME, stagingUrl, 'success', GITHUB_CREDENTIAL_ID)
       //only add comment for PRs - CHANGE_ID isn't populated for commits to regular branches
       if (env.CHANGE_ID) {
-        def config = [message:"${env.DEPLOYMENT_ENV} Environment URL: ${stagingUrl}"]
+        def config = [message:"${env.DEPLOYMENT_ENV} environment deloyed by CloudBees CI and is available at: ${stagingUrl}"]
         gitHubComment(config)
       }
     }

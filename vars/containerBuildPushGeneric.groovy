@@ -1,6 +1,5 @@
 // vars/containerBuildPushGeneric.groovy
 def call(String imageName,
-         String imageTag,
          String containerRegistry = "us-east1-docker.pkg.dev/core-workshop/workshop-registry", 
          Closure body) {
   def label = "kaniko-${UUID.randomUUID().toString()}"
@@ -10,12 +9,9 @@ def call(String imageName,
     node(label) {
       body()
       def tag = env.IMAGE_TAG ?: env.SHORT_COMMIT
-      def eventTag = imageTag ?: currentBuild?.getBuildCauses()[0]?.event?.image?.tag?.toString()
+      def eventTag = imageTag currentBuild?.getBuildCauses()[0]?.event?.image?.tag?.toString()
       if(env.EVENT_BASE_IMAGE_TAG) {
         customBuildArg = "--build-arg BASE_IMAGE_TAG=${env.EVENT_BASE_IMAGE_TAG}"
-      }
-      if(eventTag) {
-        customBuildArg = "--build-arg BASE_IMAGE_TAG=${eventTag}"
       }
       imageName = imageName.toLowerCase()
       container(name: 'kaniko', shell: '/busybox/sh') {

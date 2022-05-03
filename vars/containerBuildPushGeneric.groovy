@@ -10,6 +10,7 @@ def call(String imageName,
       body()
       def tag = env.IMAGE_TAG ?: env.SHORT_COMMIT
       def eventTag = currentBuild?.getBuildCauses()[0]?.event?.image?.tag?.toString()
+             echo "${eventTag}"
       if(eventTag) {
         customBuildArg = "--build-arg BASE_IMAGE_TAG=${eventTag}"
       }
